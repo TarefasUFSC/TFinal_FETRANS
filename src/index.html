@@ -13,20 +13,34 @@
         <div class="subsection-container">
             <div class="subsection-item viwer-container ">
                 <p class="subsection-title">Altura da Comporta</p>
-                <main>
-                </main>
+                <div class="subsubsection-item">
+                    <main>
+                    </main>
+                </div>
+                <div class="subsubsection-item">
+                    <div class="slider-container">
+                        <p>Grid: <span id="grid_value1"></span> x <span id="grid_value2"></span></p>
+                        <input type="range" min="10" max="100" value="10" class="slider" id="grid_slider">
+                    </div>
+                    <div class="slider-container">
+                        <p>Reservatório de Água: Altura: <span id="res_height_value"></span> | Largura: <span id="res_width_value"></span></p>
+                        <input type="range" min="5" max="100" value="10" class="slider" id="res_height_slider">
+                        <input type="range" min="5" max="100" value="8" class="slider" id="res_width_slider">
+                    </div>
+
+                </div>
             </div>
             <div class="subsection-item shape-selector-container ">
 
                 <p class="subsection-title">Formato da Comporta</p>
                 <div class="shapes-list-container">
-                    <div class="shape-info-container">
+                    <div class="subsubsection-item shape-info-container">
                         <p class="shape-name">Retângulo</p>
                     </div>
-                    <div class="shape-info-container">
+                    <div class="subsubsection-item shape-info-container">
                         <p class="shape-name">Triângulo isósceles</p>
                     </div>
-                    <div class="shape-info-container">
+                    <div class="subsubsection-item shape-info-container">
                         <p class="shape-name">Genérica (Baseada em Retângulos)</p>
                     </div>
                 </div>
@@ -42,6 +56,7 @@
 </body>
 
 
+<script src="shapes.js"></script>
 <script src="index.js"></script>
 
 </html>
