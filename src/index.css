@@ -1,0 +1,54 @@
+body{
+    background-color: #f0f0f0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+.problem-inputs-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 10px;
+    /*background-color: antiquewhite;*/
+}
+.problem-result-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 10px;
+    /* background-color: blue; */
+}
+.subsection-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 10px;
+    /* background-color: green; */
+}
+p.section-title{
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.subsection-item{
+    /*Coloca uma borda fina ao redor*/
+    border: 1px solid #000;
+    /*Coloca uma margem de 10px em todos os lados*/
+    margin: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+
+}
+.viwer-container{
+    width: 50%;
+    min-width: 200px;
+}
+.shape-selector-container{
+    width: 40%;
+    min-width: 160px;
+}
