@@ -2,6 +2,7 @@
 
 <head>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js" integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
     <script src="sketch.js"></script>
     <link rel="stylesheet" href="index.css">
     <title>Comporta Calculator</title>
@@ -34,16 +35,17 @@
 
                 <p class="subsection-title">Formato da Comporta</p>
                 <div class="shapes-list-container">
-                    <div class="subsubsection-item shape-info-container">
-                        <p class="shape-name">Retângulo</p>
+                    <div class="subsubsection-item shape-info-container" id="rectangle_shape_selector">
+                        <p class="shape-name" >Retângulo</p>
                     </div>
-                    <div class="subsubsection-item shape-info-container">
+                    <div class="subsubsection-item shape-info-container" id="triangle_shape_selector">
                         <p class="shape-name">Triângulo isósceles</p>
                     </div>
-                    <div class="subsubsection-item shape-info-container">
+                    <div class="subsubsection-item shape-info-container" id="generic_shape_selector">
                         <p class="shape-name">Genérica (Baseada em Retângulos)</p>
                     </div>
                 </div>
+                <div class="shape-modifier-container" id="shape_modifier_container"></div>
             </div>
         </div>
         <button class="btn-calcular">Calcular</button>
