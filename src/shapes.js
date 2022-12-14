@@ -120,7 +120,7 @@ class Rectangle extends Shape {
         super(vertices, m);
         this.w = w; // largura em metros
         this.h = h; // altura em metros
-        this.center = center;
+        this.origin = center;
     }
     calculate_moment_of_inertia() {
         return this.w * this.h * this.h * this.h / 12;
@@ -133,7 +133,7 @@ class Rectangle extends Shape {
         push();
         // coloca cor branca
         fill(255);
-        rect((this.center.x-this.w/2) * largura_canvas / grid_dimensions, ((grid_dimensions - this.center.y)-this.h) * largura_canvas / grid_dimensions, this.w * largura_canvas / grid_dimensions, this.h * largura_canvas / grid_dimensions);
+        rect(parseInt((this.origin.x - this.w/2) * largura_canvas / grid_dimensions), ((grid_dimensions - this.origin.y)) * largura_canvas / grid_dimensions, this.w * largura_canvas / grid_dimensions, this.h * largura_canvas / grid_dimensions);
         pop();
 
     }
@@ -143,7 +143,7 @@ class Triangle extends Shape {
         super(vertices, m);
         this.b = b; //base em metros
         this.h = h; //altura em metros
-        this.center = center;
+        this.origin = center;
     }
     calculate_moment_of_inertia() {
         return this.b * this.h * this.h * this.h / 36;

@@ -59,7 +59,7 @@ function calculatePressure(shape, center){
   let pressure = 0;
   let area = shape.calculate_area();
   let moment_of_inertia = shape.calculate_moment_of_inertia();
-  let distance = center.distance_to(shape.center_of_mass());
+  let distance = center.distance_to(shape.origin_of_mass());
   pressure = area * moment_of_inertia / distance;
   return pressure;
 }

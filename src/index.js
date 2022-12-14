@@ -42,7 +42,7 @@ window.onload = function () {
         res_height_span.innerHTML = parseInt(res_height_slider.value);
         reservatorio_de_agua.altura = parseInt(res_height_slider.value);
 
-        
+
 
 
         draw();
@@ -56,12 +56,12 @@ window.onload = function () {
         reservatorio_de_agua.largura = parseInt(res_width_slider.value);
         if (rectangle_width_slider) {
             rectangle_width_slider.max = parseInt(res_width_slider.value);
-            if(parseInt(rectangle_width_slider.value) > parseInt(res_width_slider.value)){
+            if (parseInt(rectangle_width_slider.value) > parseInt(res_width_slider.value)) {
                 rectangle_width_slider.value = parseInt(res_width_slider.value);
                 drawingShape.w = parseInt(res_width_slider.value);
                 drawingShape.h = parseInt(res_width_slider.value);
             }
-            drawingShape.center.x = parseInt(res_width_slider.value / 2);
+            drawingShape.origin.x = parseInt(res_width_slider.value / 2);
         }
         draw();
     });
@@ -73,14 +73,14 @@ window.onload = function () {
         reservatorio_de_agua.altura = parseInt(res_height_slider.value);
         if (rectangle_height_slider) {
             rectangle_height_slider.max = parseInt(res_height_slider.value);
-            if(parseInt(rectangle_height_slider.value) > parseInt(res_height_slider.value)){
+            if (parseInt(rectangle_height_slider.value) > parseInt(res_height_slider.value)) {
                 rectangle_height_slider.value = parseInt(res_height_slider.value);
                 drawingShape.h = parseInt(res_height_slider.value);
             }
             rectangle_position_slider.max = parseInt(res_height_slider.value - drawingShape.h);
-            if(parseInt(rectangle_position_slider.value) > parseInt(res_height_slider.value - drawingShape.h)){
+            if (parseInt(rectangle_position_slider.value) > parseInt(res_height_slider.value - drawingShape.h)) {
                 rectangle_position_slider.value = parseInt(res_height_slider.value - drawingShape.h);
-                drawingShape.center.y = parseInt(res_height_slider.value - drawingShape.h);
+                drawingShape.origin.y = parseInt(res_height_slider.value - drawingShape.h);
             }
             rectangle_position_slider.min = parseInt(drawingShape.h);
         }
@@ -89,28 +89,29 @@ window.onload = function () {
 
     // cria event listener para selecionar a forma
 
-    rectangle_shape_selector.addEventListener("click", function () {
+    rectangle_shape_selector.addEventListener("click", async function () {
         // coloca no html os parametros do retangulo no shape_modifier_container
-        let h_value = 0;
-        if (drawingShape) {
-            h_value = drawingShape.h;
-        }
+        delete drawingShape;
+        let newHeight = parseInt(reservatorio_de_agua.altura / 2);
+        let newWidth = parseInt((reservatorio_de_agua.largura - 2) / 2);
+        drawingShape = new Rectangle([], newHeight, newWidth, 1, new Vertex(parseInt(reservatorio_de_agua.largura / 2), parseInt(reservatorio_de_agua.altura / 2)));
+        let h_value = drawingShape.h;
         shape_modifier_container.innerHTML = `
         <div class="row">
             <div class="col-6">
                 <label for="rectangle_height_slider">Altura</label>
-                <input type="range" class="form-range" min="1" max="${reservatorio_de_agua.altura}" value="${parseInt(reservatorio_de_agua.altura / 2)}" id="rectangle_height_slider">
-                <span id="rectangle_height_value">${parseInt(reservatorio_de_agua.altura / 2)}</span>
+                <input type="range" class="form-range" min="1" max="${reservatorio_de_agua.altura}" value="${drawingShape.h}" id="rectangle_height_slider">
+                <span id="rectangle_height_value">${drawingShape.h}</span>
             </div>
             <div class="col-6">
                 <label for="rectangle_width_slider">Largura</label>
-                <input type="range" class="form-range" min="1" max="${reservatorio_de_agua.largura}" value="${parseInt((reservatorio_de_agua.largura-2) / 2)}" id="rectangle_width_slider">
-                <span id="rectangle_width_value">${reservatorio_de_agua.largura}</span>
+                <input type="range" class="form-range" min="1" max="${reservatorio_de_agua.largura}" value="${drawingShape.w}" id="rectangle_width_slider">
+                <span id="rectangle_width_value">${drawingShape.w}</span>
             </div>
             <div class="col-6">
-                <label for="rectangle_position_slider">Posição</label>
-                <input type="range" class="form-range" min="${parseInt(h_value)+1}" max="${parseInt(reservatorio_de_agua.altura - reservatorio_de_agua.altura / 2)}" value="${parseInt(reservatorio_de_agua.altura / 2)}" id="rectangle_position_slider">
-                <span id="rectangle_position_value">${parseInt(reservatorio_de_agua.altura / 2)}</span>
+                <label for="rectangle_position_slider">Posição (Topo) </label>
+                <input type="range" class="form-range" min="${drawingShape.h}" max="${parseInt(reservatorio_de_agua.altura)}" value="$drawingShape.h}" id="rectangle_position_slider">
+                <span id="rectangle_position_value">${drawingShape.h}</span>
             </div>
             <div class="col-12">
                 <button type="button" class="btn btn-primary" id="rectangle_shape_button">Calcular</button>
@@ -121,12 +122,20 @@ window.onload = function () {
         rectangle_width_slider = document.getElementById("rectangle_width_slider");
         rectangle_height_slider = document.getElementById("rectangle_height_slider");
 
-        drawingShape = new Rectangle([], parseInt(rectangle_height_slider.value), parseInt(rectangle_width_slider.value), 1, new Vertex(parseInt(reservatorio_de_agua.largura / 2), parseInt(reservatorio_de_agua.altura / 2)));
+        
         rectangle_height_slider.addEventListener("input", function () {
             // alert(parseInt(rectangle_height_slider.value));
             let rectangle_height_value = document.getElementById("rectangle_height_value");
             rectangle_height_value.innerHTML = parseInt(rectangle_height_slider.value);
             drawingShape.h = parseInt(rectangle_height_slider.value);
+
+
+            if (grid_dimensions < drawingShape.h + (grid_dimensions - drawingShape.origin.y)) {
+                drawingShape.origin.y = drawingShape.h;
+                rectangle_position_slider.value = grid_dimensions - drawingShape.h;
+            }
+
+            rectangle_position_slider.min = parseInt(rectangle_height_slider.value);
             draw();
 
         });
@@ -140,8 +149,22 @@ window.onload = function () {
         rectangle_position_slider = document.getElementById("rectangle_position_slider");
         rectangle_position_slider.addEventListener("input", function () {
             let rectangle_position_value = document.getElementById("rectangle_position_value");
-            rectangle_position_value.innerHTML = parseInt(rectangle_position_slider.value);
-            drawingShape.center.y = parseInt(rectangle_position_slider.value);
+            console.log(grid_dimensions, drawingShape.h + (grid_dimensions -drawingShape.origin.y))
+
+            if (reservatorio_de_agua.altura < drawingShape.origin.y) {
+                drawingShape.origin.y = reservatorio_de_agua.altura;
+                rectangle_position_slider.value = reservatorio_de_agua.altura;
+
+            }
+            else if (grid_dimensions < drawingShape.h + (grid_dimensions - drawingShape.origin.y)) {
+                drawingShape.origin.y = drawingShape.h;
+                rectangle_position_slider.value = grid_dimensions - drawingShape.h;
+            }
+            else {
+
+                rectangle_position_value.innerHTML = parseInt(rectangle_position_slider.value);
+                drawingShape.origin.y = parseInt(rectangle_position_slider.value);
+            }
             draw();
         });
     });
