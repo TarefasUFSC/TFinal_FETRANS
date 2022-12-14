@@ -54,12 +54,33 @@ windowResized = function () {
   resizeCanvas(largura_canvas, altura_canvas);
 };
 
-function calculatePressure(shape, center){
+// function calculatePressure(shape, center){
+//   console.log("calculating pressure");
+//   let pressure = 0;
+//   let area = shape.calculate_area();
+//   let moment_of_inertia = shape.calculate_moment_of_inertia();
+//   let distance = center.distance_to(shape.origin_of_mass());
+//   pressure = area * moment_of_inertia / distance;
+//   return pressure;
+// }
+
+// a function to calculate the pressure of a shape under the water surface
+// its known that the fluid is water
+// the sum of the pressure on each line of the reservoir is given to the object as an array
+// the object will calculate the pressure on each line and return the sum of the pressure on each line
+function calculatePressure(shape) {
   console.log("calculating pressure");
-  let pressure = 0;
-  let area = shape.calculate_area();
-  let moment_of_inertia = shape.calculate_moment_of_inertia();
-  let distance = center.distance_to(shape.origin_of_mass());
-  pressure = area * moment_of_inertia / distance;
+  let pressureByLine = calculatePressureOnResevoirByLine();
+  return shape.calculate_pressure(pressureByLine);
+}
+
+function calculatePressureOnResevoirByLine(){
+  // pressure = depth * specificWeightOfWater * accelerationDueToGravity
+  let accelerationDueToGravity = 9.8; // in m/s^2
+  let specificWeightOfWater = 9810; // in kg/m^3
+  let pressure = [];
+  for (let i = 0; i < reservatorio_de_agua.altura; i++) {
+    pressure.push((reservatorio_de_agua.altura - i) * specificWeightOfWater * accelerationDueToGravity);
+  }
   return pressure;
 }

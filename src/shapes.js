@@ -80,6 +80,14 @@ class Shape {
         return moment_of_inertia;
     }
     calculate_area() {
+        let area_by_line = this.calculate_area_by_line();
+        let area = 0;
+        for (let i = 0; i < area_by_line.length; i++) {
+            area += area_by_line[i];
+        }
+        return area;
+    }
+    calculate_area_by_line(){
         let vertices_by_y = [];
         for (let i = 0; i < this.vertices.length; i++) {
             let vertex = this.vertices[i];
@@ -105,12 +113,12 @@ class Shape {
         console.log(vertices_by_y);
 
         // calcula a area de cada linha
-        let area_T = 0;
+        let area_T = [];
         for (let i = 0; i < vertices_by_y.length - 1; i++) {
             let vertices = vertices_by_y[i];
             let width = vertices[vertices.length - 1].x - vertices[0].x;
             let height = vertices_by_y[i + 1][0].y - vertices[0].y;
-            area_T += width * height;
+            area_T.push(width * height);
         }
         return area_T;
     }
@@ -127,6 +135,25 @@ class Rectangle extends Shape {
     }
     calculate_area() {
         return this.w * this.h;
+    }
+    calculate_pressure(reservoirPressureByLine){
+        let area_by_line = this.calculate_area_by_line();
+        let area = 0;
+        for (let i = 0; i < area_by_line.length; i++) {
+            area += area_by_line[i];
+        }
+        let pressure = 0;
+        for (let i = 0; i < area_by_line.length; i++) {
+            pressure += area_by_line[i] * reservoirPressureByLine[this.origin.y-this.h+i];
+        }
+        return pressure;
+    }
+    calculate_area_by_line(){
+        let area = [];
+        for (let i = 0; i< this.h; i++){
+            area.push(this.w);
+        }
+        return area;
     }
     draw() {
         // using p5.js

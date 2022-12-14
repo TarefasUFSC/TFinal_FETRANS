@@ -113,16 +113,14 @@ window.onload = function () {
                 <input type="range" class="form-range" min="${drawingShape.h}" max="${parseInt(reservatorio_de_agua.altura)}" value="$drawingShape.h}" id="rectangle_position_slider">
                 <span id="rectangle_position_value">${drawingShape.h}</span>
             </div>
-            <div class="col-12">
-                <button type="button" class="btn btn-primary" id="rectangle_shape_button">Calcular</button>
-                </div>
+            
         </div>
         `;
         // cria os event listeners dos sliders do retangulo
         rectangle_width_slider = document.getElementById("rectangle_width_slider");
         rectangle_height_slider = document.getElementById("rectangle_height_slider");
 
-        
+
         rectangle_height_slider.addEventListener("input", function () {
             // alert(parseInt(rectangle_height_slider.value));
             let rectangle_height_value = document.getElementById("rectangle_height_value");
@@ -149,7 +147,7 @@ window.onload = function () {
         rectangle_position_slider = document.getElementById("rectangle_position_slider");
         rectangle_position_slider.addEventListener("input", function () {
             let rectangle_position_value = document.getElementById("rectangle_position_value");
-            console.log(grid_dimensions, drawingShape.h + (grid_dimensions -drawingShape.origin.y))
+            console.log(grid_dimensions, drawingShape.h + (grid_dimensions - drawingShape.origin.y))
 
             if (reservatorio_de_agua.altura < drawingShape.origin.y) {
                 drawingShape.origin.y = reservatorio_de_agua.altura;
@@ -177,4 +175,8 @@ window.onload = function () {
     let generic_shape_selector = document.getElementById("generic_shape_selector");
     generic_shape_selector.addEventListener("click", function () { });
 
+    let btn_calcular = document.getElementById("btn_calcular");
+    btn_calcular.addEventListener("click", function () {
+        alert(calculatePressure(drawingShape))
+    });
 }
