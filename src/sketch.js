@@ -76,7 +76,7 @@ function calculatePressure(shape) {
 
 function calculatePressureOnResevoirByLine(){
   // pressure = depth * specificWeightOfWater * accelerationDueToGravity
-  let accelerationDueToGravity = 9.8; // in m/s^2
+  let accelerationDueToGravity = 9.81; // in m/s^2
   let specificWeightOfWater = 9810; // in kg/m^3
   let pressure = [];
   for (let i = 0; i < reservatorio_de_agua.altura; i++) {
